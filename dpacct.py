@@ -130,7 +130,7 @@ class CGFAcct:
         if delta is 0:
             return self.CGF_inf
         else:
-            print(np.argmin((np.log(1 / delta) + self.CGFs) / self.lambs))
+#            print(np.argmin((np.log(1 / delta) + self.CGFs) / self.lambs))
             return np.min((np.log(1 / delta) + self.CGFs) / self.lambs)
 
 
