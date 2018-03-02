@@ -11,20 +11,20 @@ acct = dpacct.DPAcct()
 # Let's say we want to access the data set by 100 times, each with and (\eps,\delta)-DP algorithm
 k=100
 eps = 0.01
-delta = 1e-7
+delta = 1e-8
 for i in range(k):
     acct.update_DPlosses(eps,delta)
 
 # we can then query the DP losses through the following two functions
 print("privacy loss through naive composition is",acct.get_eps_delta_naive())
-print("privacy loss through strong composition (using KOV) is",acct.get_eps(1e-5),1e-5)
+print("privacy loss through strong composition (using KOV) is",acct.get_eps(delta*k*1.1),delta*k)
 
 
 # What if I am adding Gaussian noise and I do not know how to calculate the corresponding eps and delta?
 # This is find, if you specify the standard deviation of the noise added w.r.t. the l2 sensitivity
 # and your favorite delta, then you get the corresponding DP
 sigma = 5
-print("The corresponding eps with respect of the gaussian noise is ", dpacct.get_eps_gaussian(sigma, delta))
+print("The corresponding eps with respect of the gaussian noise is ", dpacct.get_eps_gaussian(sigma,delta))
 
 # the underlying implementation uses the Cumulant Generating Functions (CGF) to calculate
 # the optimal order of moment to use and construct a tail bound with the give delta.
@@ -39,7 +39,7 @@ delta2 = 1e-6
 delta3 = 1e-4
 cgfacct = dpacct.CGFAcct(m)
 k=1000
-sigma = 10 # each
+sigma = 5 # each
 prob=0.01 # sampling probability
 
 
